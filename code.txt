@@ -31,3 +31,23 @@ public void OracleRunQuery(OracleCommand cmd, OracleConnection conn, string quer
                 throw oe;
             }
         }
+
+//Code to read rows from DB
+OracleConnection conn = new OracleConnection(OracleConnString(host, port, sid, user, pass));
+try
+            {
+                conn.Open();
+                string query = "SELECT first_name FROM vendor_contacts";
+                OracleCommand cmd = new OracleCommand(query, conn);
+                OracleDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    vendor_contacts.InnerHtml += reader["first_name"] + " ";
+                }
+                conn.Close();
+            }
+            catch (OracleException oe)
+            {
+                
+                throw oe;
+            }
