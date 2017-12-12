@@ -1,0 +1,33 @@
+//Connection String for Oracle SQL
+
+public static string OracleConnString(string host, string port, string servicename, string user, string pass)
+        {
+            return String.Format(
+              "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST={0})" +
+              "(PORT={1}))(CONNECT_DATA=(SERVICE_NAME={2})));User Id={3};Password={4};",
+              host,
+              port,
+              servicename,
+              user,
+              pass);
+        }
+        
+
+
+//Function to execute SQL Command
+public void OracleRunQuery(OracleCommand cmd, OracleConnection conn, string query)
+        {
+            try
+            {
+                int rows = 0;
+                conn.Open();
+                cmd = new OracleCommand(query, conn);
+                rows = cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (OracleException oe)
+            {
+
+                throw oe;
+            }
+        }
